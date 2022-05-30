@@ -4,7 +4,8 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ProEventos.API.Data;
-using ProEventos.API.Models;
+using ProEventos.Domain;
+using ProEventos.Persistence;
 
 namespace ProEventos.API.Controllers
 {
@@ -13,9 +14,9 @@ namespace ProEventos.API.Controllers
     public class EventosController : ControllerBase
     {
         public IEnumerable<Evento> _evento = new Evento[] { };
-        private readonly DataContext context;
+        private readonly ProEventosContext context;
 
-        public EventosController(DataContext context)
+        public EventosController(ProEventosContext context)
         {
             this.context = context;
         }
