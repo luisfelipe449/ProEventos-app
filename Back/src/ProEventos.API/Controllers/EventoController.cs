@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using ProEventos.API.Data;
 using ProEventos.Domain;
 using ProEventos.Persistence;
 
@@ -30,7 +27,7 @@ namespace ProEventos.API.Controllers
         [HttpGet("{id}")]
         public Evento GetById(int id)
         {
-            return context.Eventos.FirstOrDefault(Evento => Evento.EventoId == id);
+            return context.Eventos.FirstOrDefault(Evento => Evento.Id == id);
         }
 
         [HttpPost]
