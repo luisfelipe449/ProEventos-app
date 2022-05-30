@@ -1,0 +1,24 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Pro Eventos</a>
+    <button class="navbar-toggler" (click)="isCollapsed = !isCollapsed" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="collapseBasic" [collapse]="isCollapsed">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="#">Eventos</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Palestrantes</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Contatos</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<app-eventos></app-eventos>
+<app-palestrantes></app-palestrantes>
+<router-outlet></router-outlet>
