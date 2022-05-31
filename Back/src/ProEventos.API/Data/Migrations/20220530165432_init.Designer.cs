@@ -2,9 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using ProEventos.API.Data;
-using ProEventos.Persistence;
+using ProEventos.Persistence.Context;
 
 namespace ProEventos.API.Data.Migrations
 {

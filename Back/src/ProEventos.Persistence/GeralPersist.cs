@@ -1,4 +1,6 @@
 using System.Threading.Tasks;
+using ProEventos.Persistence.Context;
+using ProEventos.Persistence.Contratos;
 
 namespace ProEventos.Persistence
 {
