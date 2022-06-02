@@ -24,7 +24,7 @@ namespace ProEventos.Application
                 _geralPersist.Add<Evento>(model);
                 if (await _geralPersist.SaveChangesAsync())
                 {
-                    return await _eventoPersist.GetEventoByIdAsync(model.Id, false);
+                    return await _eventoPersist.GetEventoByIdAsync(model.EventoId, false);
                 }
                 return null;
             }
@@ -42,11 +42,11 @@ namespace ProEventos.Application
                 if (evento == null)
                     return null;
 
-                model.Id = evento.Id;
+                model.EventoId = evento.EventoId;
                 _geralPersist.Update(model);
                 if (await _geralPersist.SaveChangesAsync())
                 {
-                    return await _eventoPersist.GetEventoByIdAsync(model.Id, false);
+                    return await _eventoPersist.GetEventoByIdAsync(model.EventoId, false);
                 }
                 return null;
             }
