@@ -1,5 +1,4 @@
-<h2>Eventos</h2>
-<hr>
+<app-title [titulo]="'Eventos'"></app-title>
 <div class="form-inline">
     <div class="form-group mb-2">
         <input type="text" class="form-control mr-2" placeholder="Buscar" [(ngModel)]="filtroLista">
@@ -8,7 +7,10 @@
 <table class="table table-striped">
     <thead class="thead-dark">
         <tr>
-            <th><button type="button" class="btn btn-outline-dark btn-sm" (click)="alterarImagem()"> {{ mostrarImagem ?
+            <th><button type="button" class="btn btn-outline-dark btn-sm" (click)="alterarImagem()">
+                    <i class=" {{ !mostrarImagem ?
+                    'fa fa-eye' : 'fa fa-eye-slash' }}"></i>
+                    {{ mostrarImagem ?
                     'Ocultar' : 'Exibir ícone' }}
                 </button></th>
             <th>#</th>
@@ -24,14 +26,16 @@
         <tr *ngFor="let evento of eventosFiltrados">
             <td><img [collapse]="!mostrarImagem" [isAnimated]="true" src="assets/{{evento.imagemURL}}"
                     alt="Imagem de evento" [style.width.px]="120"></td>
-            <td>{{evento.eventoId}}</td>
+            <td>{{evento.id}}</td>
             <td>{{evento.tema}}</td>
             <td>{{evento.local}}</td>
-            <td>{{evento.dataEvento}}</td>
+            <td>{{evento.dataEvento | date }}</td>
             <td>{{evento.qtdPessoas}}</td>
-            <td>{{evento.lote}}</td>
-            <td><button type="button" class="btn btn-primary btn-sm mr-2">Editar</button>
-                <button type="button" class="btn btn-danger btn-sm">Excluir</button>
+            <td>{{evento.lote[0].nome}}</td>
+            <td><button type="button" class="btn btn-primary btn-sm mr-2" (click)="openModal(template)"><i
+                        class="fa fa-edit" tooltip="Editar"></i></button>
+                <button type="button" class="btn btn-danger btn-sm" (click)="openModal(template)" tooltip="Excluir"><i
+                        class="fa fa-trash"></i></button>
             </td>
         </tr>
     </tbody>
@@ -43,3 +47,10 @@
         </tr>
     </tfoot>
 </table>
+<ng-template #template>
+    <div class="modal-body text-center">
+        <p>Tem certeza que quer deletar este evento?</p>
+        <button type="button" class="btn btn-default" (click)="confirm()">Sim</button>
+        <button type="button" class="btn btn-primary" (click)="decline()">Não</button>
+    </div>
+</ng-template>

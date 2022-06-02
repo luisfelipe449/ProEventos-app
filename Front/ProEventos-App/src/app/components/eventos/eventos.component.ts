@@ -1,5 +1,9 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Evento } from 'src/app/model/evento';
+import { EventoService } from 'src/app/services/evento.service';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { ToastrService } from 'ngx-toastr';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-eventos',
@@ -7,8 +11,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./eventos.component.scss'],
 })
 export class EventosComponent implements OnInit {
-  public eventos: any = [];
-  public eventosFiltrados: any = [];
+  modalRef?: BsModalRef;
+  public eventos: Evento[] = [];
+  public eventosFiltrados: Evento[] = [];
   mostrarImagem = true;
   private _filtroLista: string = '';
 
@@ -23,7 +28,7 @@ export class EventosComponent implements OnInit {
       : this.eventos;
   }
 
-  filtrarEventos(filtrarPor: string): any {
+  public filtrarEventos(filtrarPor: string): Evento[] {
     filtrarPor = filtrarPor.toLocaleLowerCase();
     return this.eventos.filter(
       (evento: any) =>
@@ -32,20 +37,49 @@ export class EventosComponent implements OnInit {
     );
   }
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private eventoService: EventoService,
+    private modalService: BsModalService,
+    private toastr: ToastrService,
+    private spinner: NgxSpinnerService
+  ) {}
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.getEventos();
   }
 
+  public alterarImagem(): void {
+    this.mostrarImagem = !this.mostrarImagem;
+  }
+
   public getEventos(): void {
-    this.http.get('https://localhost:5001/api/eventos').subscribe((res) => {
-      this.eventos = res;
-      this.eventosFiltrados = this.eventos;
+    this.eventoService.getEventos().subscribe({
+      next: (eventos: Evento[]) => {
+        this.eventos = eventos;
+        this.eventosFiltrados = this.eventos;
+      },
+      error: (error) => {
+        console.log(error);
+        this.spinner.hide();
+        this.toastr.error("Erro ao tentar carregar os eventos", "Erro");
+      },
+      complete: () => {
+        this.spinner.hide();
+      },
     });
   }
 
-  alterarImagem() {
-    this.mostrarImagem = !this.mostrarImagem;
+  openModal(template: TemplateRef<any>): void {
+    this.modalRef = this.modalService.show(template, { class: 'modal-sm' });
+  }
+
+  confirm(): void {
+    this.toastr.success('Evento deletado com sucesso!', 'Sucesso');
+    this.modalRef?.hide();
+  }
+
+  decline(): void {
+    this.toastr.error('Você cancelou a exclusão do evento', 'Erro');
+    this.modalRef?.hide();
   }
 }

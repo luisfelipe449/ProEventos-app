@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -11,6 +11,15 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { NavComponent } from './components/nav/nav.component';
 import { FormsModule } from '@angular/forms';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { ToastrModule } from 'ngx-toastr';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { ContatosComponent } from './components/contatos/contatos.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { PerfilComponent } from './components/perfil/perfil.component';
+import { TitleComponent } from './shared/title/title.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +27,10 @@ import { FormsModule } from '@angular/forms';
     EventosComponent,
     PalestrantesComponent,
     NavComponent,
+    ContatosComponent,
+    DashboardComponent,
+    PerfilComponent,
+    TitleComponent,
   ],
   imports: [
     BrowserModule,
@@ -26,9 +39,20 @@ import { FormsModule } from '@angular/forms';
     BrowserAnimationsModule,
     BsDatepickerModule,
     CollapseModule,
-    FormsModule
+    FormsModule,
+    TooltipModule.forRoot(),
+    BsDropdownModule,
+    ModalModule.forRoot(),
+    ToastrModule.forRoot({
+      timeOut: 3000,
+      positionClass: 'toast-bottom-right',
+      preventDuplicates: true,
+      progressBar: true,
+    }),
+    NgxSpinnerModule,
   ],
-  providers: [],
+  providers: [TitleComponent],
   bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule {}
