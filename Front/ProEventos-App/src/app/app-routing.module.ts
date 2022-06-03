@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ContatosComponent } from './components/contatos/contatos.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { EventosComponent } from './components/eventos/eventos.component';
-import { NavComponent } from './components/nav/nav.component';
+import { NavComponent } from './shared/nav/nav.component';
 import { PalestrantesComponent } from './components/palestrantes/palestrantes.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
 
