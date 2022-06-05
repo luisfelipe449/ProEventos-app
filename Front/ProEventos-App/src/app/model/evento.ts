@@ -3,7 +3,7 @@ import { Palestrante } from './palestrante';
 import { RedeSocial } from './redeSocial';
 
 export interface Evento {
-  id?: number;
+  eventoId: number;
   local: string;
   dataEvento?: Date;
   tema: string;

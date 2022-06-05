@@ -18,8 +18,13 @@ import { ToastrModule } from 'ngx-toastr';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { ContatosComponent } from './components/contatos/contatos.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { PerfilComponent } from './components/perfil/perfil.component';
+import { PerfilComponent } from './components/user/perfil/perfil.component';
 import { TitleComponent } from './shared/title/title.component';
+import { EventosDetalheComponent } from './components/eventos/eventos-detalhe/eventos-detalhe.component';
+import { EventosListaComponent } from './components/eventos/eventos-lista/eventos-lista.component';
+import { UserComponent } from './components/user/user.component';
+import { LoginComponent } from './components/user/login/login.component';
+import { RegistrationComponent } from './components/user/registration/registration.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +36,11 @@ import { TitleComponent } from './shared/title/title.component';
     DashboardComponent,
     PerfilComponent,
     TitleComponent,
+    EventosDetalheComponent,
+    EventosListaComponent,
+    UserComponent,
+    LoginComponent,
+    RegistrationComponent,
   ],
   imports: [
     BrowserModule,
