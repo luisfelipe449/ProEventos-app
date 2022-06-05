@@ -14,7 +14,7 @@ export class EventosComponent implements OnInit {
   modalRef?: BsModalRef;
   public eventos: Evento[] = [];
   public eventosFiltrados: Evento[] = [];
-  mostrarImagem = true;
+  exibirImagem = true;
   private _filtroLista: string = '';
 
   public get filtroLista(): string {
@@ -49,7 +49,7 @@ export class EventosComponent implements OnInit {
   }
 
   public alterarImagem(): void {
-    this.mostrarImagem = !this.mostrarImagem;
+    this.exibirImagem = !this.exibirImagem;
   }
 
   public getEventos(): void {
@@ -61,7 +61,7 @@ export class EventosComponent implements OnInit {
       error: (error) => {
         console.log(error);
         this.spinner.hide();
-        this.toastr.error("Erro ao tentar carregar os eventos", "Erro");
+        this.toastr.error('Erro ao tentar carregar os eventos', 'Erro');
       },
       complete: () => {
         this.spinner.hide();
@@ -81,5 +81,11 @@ export class EventosComponent implements OnInit {
   decline(): void {
     this.toastr.error('Você cancelou a exclusão do evento', 'Erro');
     this.modalRef?.hide();
+  }
+
+  public mostraImagem(imagemURL: string): string {
+    return imagemURL !== ''
+      ? `${this.eventoService.baseURL}resources/images/${imagemURL}`
+      : 'assets/img/semImagem.jpeg';
   }
 }
