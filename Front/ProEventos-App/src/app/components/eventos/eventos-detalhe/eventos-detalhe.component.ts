@@ -18,6 +18,16 @@ export class EventosDetalheComponent implements OnInit {
     return this.form.controls;
   }
 
+  get bsConfig(): any {
+    return {
+      isAnimated: true,
+      adaptivePosition: true,
+      dateInputFormat: 'DD-MM-YYYY hh:mm a',
+      containerClass: 'theme-default',
+      showWeekNumbers: false,
+    };
+  }
+
   constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
@@ -48,5 +58,9 @@ export class EventosDetalheComponent implements OnInit {
 
   resetForm(): void {
     this.form.reset();
+  }
+
+  public cssValidator(campoForm: FormControl): any {
+    return { 'is-valid': campoForm.errors && campoForm.touched };
   }
 }
