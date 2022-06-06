@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProEventos.Application.Contracts;
+using ProEventos.Application.DTO;
 using ProEventos.Domain;
 using ProEventos.Persistence.Context;
 
@@ -30,6 +31,7 @@ namespace ProEventos.API.Controllers
                 if (eventos == null)
                     return NotFound("Nenhum evento encontrado.");
 
+            
                 return Ok(eventos);
             }
             catch (Exception ex)
@@ -82,7 +84,7 @@ namespace ProEventos.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(Evento model)
+        public async Task<IActionResult> Post(EventoDto model)
         {
             try
             {
@@ -102,7 +104,7 @@ namespace ProEventos.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(Evento model, int id)
+        public async Task<IActionResult> Put(EventoDto model, int id)
         {
             try
             {

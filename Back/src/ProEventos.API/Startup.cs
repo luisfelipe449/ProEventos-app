@@ -10,6 +10,8 @@ using ProEventos.Application.Contracts;
 using ProEventos.Persistence;
 using ProEventos.Persistence.Context;
 using ProEventos.Persistence.Contratos;
+using AutoMapper;
+using System;
 
 namespace ProEventos.API
 {
@@ -38,6 +40,7 @@ namespace ProEventos.API
                             .ReferenceLoopHandling
                             .Ignore
                 );
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddScoped<IEventosService, EventoService>();
             services.AddScoped<IGeralPersist, GeralPersist>();
             services.AddScoped<IEventoPersist, EventosPersist>();
@@ -58,6 +61,8 @@ namespace ProEventos.API
                     c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ProEventos.API v1")
                 );
             }
+
+
 
             app.UseHttpsRedirection();
 
