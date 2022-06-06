@@ -10,7 +10,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
 import { NavComponent } from './shared/nav/nav.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ModalModule } from 'ngx-bootstrap/modal';
@@ -60,6 +60,7 @@ import { RegistrationComponent } from './components/user/registration/registrati
       progressBar: true,
     }),
     NgxSpinnerModule,
+    ReactiveFormsModule
   ],
   providers: [TitleComponent],
   bootstrap: [AppComponent],
