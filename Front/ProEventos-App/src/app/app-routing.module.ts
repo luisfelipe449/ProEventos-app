@@ -14,6 +14,7 @@ import { RegistrationComponent } from './components/user/registration/registrati
 
 const routes: Routes = [
   { path: 'eventos', redirectTo: 'eventos/lista', pathMatch: 'full' },
+  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   {
     path: '',
     component: NavComponent,

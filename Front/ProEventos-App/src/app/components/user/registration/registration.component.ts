@@ -1,5 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControlOptions,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { ValidatorField } from 'src/app/helpers/validatorField';
 
 @Component({
   selector: 'app-registration',
@@ -9,34 +17,35 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class RegistrationComponent implements OnInit {
   form!: FormGroup;
 
-  constructor(public fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private toaster: ToastrService
+  ) {}
+
+  get f(): any {
+    return this.form.controls;
+  }
 
   ngOnInit(): void {
     this.validation();
   }
 
   private validation(): void {
-    this.form = this.fb.group({
-      primeiroNome: ['', [Validators.required, Validators.minLength(3)]],
-      ultimoNome: ['', [Validators.required, Validators.minLength(3)]],
-      email: ['', [Validators.required, Validators.email]],
-      userName: ['', [Validators.required, Validators.minLength(3)]],
-      senha: ['', [Validators.required, Validators.minLength(6)]],
-      confirmarSenha: ['', [Validators.required, Validators.minLength(6)]],
-    });
-  }
+    const formOptions: AbstractControlOptions = {
+      validators: ValidatorField.MustMatch('password', 'confirmePassword'),
+    };
 
-  resetForm(): void {
-    this.form.reset();
-  }
-
-  public get f(): any {
-    return this.form.controls;
-  }
-
-  register(): void {
-    if (this.form.valid) {
-      console.log(this.form.value);
-    }
+    this.form = this.fb.group(
+      {
+        primeiroNome: ['', Validators.required],
+        ultimoNome: ['', Validators.required],
+        email: ['', [Validators.required, Validators.email]],
+        userName: ['', Validators.required],
+        password: ['', [Validators.required, Validators.minLength(4)]],
+        confirmePassword: ['', Validators.required],
+      },
+      formOptions
+    );
   }
 }
