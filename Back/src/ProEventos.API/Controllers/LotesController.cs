@@ -1,25 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProEventos.Application.Contracts;
+using Microsoft.AspNetCore.Http;
 using ProEventos.Application.DTO;
-using ProEventos.Domain;
-using ProEventos.Persistence.Context;
 
-namespace ProLotes.API.Controllers
+namespace ProEventos.API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
     public class LotesController : ControllerBase
     {
-        private readonly ILotesService _lotesService;
+        private readonly ILotesService _loteService;
 
-        public LotesController(ILotesService lotesService)
+        public LotesController(ILotesService LoteService)
         {
-            _lotesService = lotesService;
+            _loteService = LoteService;
         }
 
         [HttpGet("{eventoId}")]
@@ -27,62 +23,51 @@ namespace ProLotes.API.Controllers
         {
             try
             {
-                var lotes = await _lotesService.GetEventoById(true);
-                if (lotes == null)
-                    return NoContent();
+                var lotes = await _loteService.GetLotesByEventoIdAsync(eventoId);
+                if (lotes == null) return NoContent();
 
                 return Ok(lotes);
             }
             catch (Exception ex)
             {
-                return this.StatusCode(
-                    StatusCodes.Status500InternalServerError,
-                    $"Erro ao tentar recuperar lotes. Erro: {ex.Message}"
-                );
+                return this.StatusCode(StatusCodes.Status500InternalServerError,
+                    $"Erro ao tentar recuperar lotes. Erro: {ex.Message}");
             }
         }
 
         [HttpPut("{eventoId}")]
-        public async Task<IActionResult> Put(LoteDto[] model, int eventoId)
+        public async Task<IActionResult> SaveLotes(int eventoId, LoteDto[] models)
         {
             try
             {
-                var lote = await _lotesService.UpdateLote(eventoId, model);
-                if (lote == null)
-                    return BadRequest("Erro ao tentar atualizar lote.");
+                var lotes = await _loteService.SaveLotes(eventoId, models);
+                if (lotes == null) return NoContent();
 
-                return Ok(lote);
+                return Ok(lotes);
             }
             catch (Exception ex)
             {
-                return this.StatusCode(
-                    StatusCodes.Status500InternalServerError,
-                    $"Erro ao tentar recuperar lotes. Erro: {ex.Message}"
-                );
+                return this.StatusCode(StatusCodes.Status500InternalServerError,
+                    $"Erro ao tentar salvar lotes. Erro: {ex.Message}");
             }
         }
 
         [HttpDelete("{eventoId}/{loteId}")]
-        public async Task<IActionResult> DeleteHttpDelete(int eventoId, int loteId)
+        public async Task<IActionResult> Delete(int eventoId, int loteId)
         {
             try
             {
-                var evento = await _eventoService.GetEventoByIdAsync(eventoId, true);
-                if (await _lotesService.DeleteLote(eventoId))
-                {
-                    return Ok("Deletado.");
-                }
-                else
-                {
-                    return BadRequest("Lote não encontrado.");
-                }
+                var lote = await _loteService.GetLoteByIdsAsync(eventoId, loteId);
+                if (lote == null) return NoContent();
+
+                return await _loteService.DeleteLote(lote.EventoId, lote.Id) 
+                       ? Ok(new { message = "Lote Deletado" }) 
+                       : throw new Exception("Ocorreu um problem não específico ao tentar deletar Lote.");
             }
             catch (Exception ex)
             {
-                return this.StatusCode(
-                    StatusCodes.Status500InternalServerError,
-                    $"Erro ao tentar deletar lotes. Erro: {ex.Message}"
-                );
+                return this.StatusCode(StatusCodes.Status500InternalServerError,
+                    $"Erro ao tentar deletar lotes. Erro: {ex.Message}");
             }
         }
     }
